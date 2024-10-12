@@ -1,0 +1,14 @@
+<div>
+    <h2>Đăng Nhập</h2>
+    <form (submit)="login()">
+      <label for="username">Tên đăng nhập</label>
+      <input type="text" [(ngModel)]="username" name="username" required />
+  
+      <label for="password">Mật khẩu</label>
+      <input type="password" [(ngModel)]="password" name="password" required />
+  
+      <button type="submit">Đăng Nhập</button>
+    </form>
+    <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+  </div>
+  

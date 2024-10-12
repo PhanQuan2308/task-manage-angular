@@ -1,0 +1,89 @@
+<div class="task-container">
+  <h5>Task Manager with Python and Angular</h5>
+
+  <!-- Form để thêm Task mới -->
+  <form (ngSubmit)="addOrUpdateTask()" class="task-form">
+    <div class="form-field">
+      <label for="name">Task Name</label>
+      <input
+        type="text"
+        [(ngModel)]="newTask.name"
+        name="name"
+        required
+        placeholder="Enter task name"
+      />
+    </div>
+    <div class="form-field">
+      <label for="description">Description</label>
+      <input
+        type="text"
+        [(ngModel)]="newTask.description"
+        name="description"
+        placeholder="Enter description"
+      />
+    </div>
+    <div class="form-field">
+      <label for="deadline">Deadline</label>
+      <input
+        type="date"
+        [(ngModel)]="newTask.deadline"
+        name="deadline"
+        required
+      />
+    </div>
+    <div class="form-field">
+      <label for="priority">Priority</label>
+      <select [(ngModel)]="newTask.priority" name="priority" required>
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
+    </div>
+    <button type="submit" [disabled]="!newTask.name || !newTask.deadline">
+      {{ editingTaskId ? "Update Task" : "Add Task" }}
+    </button>
+  </form>
+
+  <!-- Table danh sách các Task -->
+  <table class="task-table">
+    <thead>
+      <tr>
+        <th>Completed</th>
+        <th>Task Name</th>
+        <th>Description</th>
+        <th>Deadline</th>
+        <th>Priority</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of tasks" [class.completed]="task.completed">
+        <td>
+          <input
+            type="checkbox"
+            [(ngModel)]="task.completed"
+            (change)="toggleTaskCompletion(task)"
+          />
+        </td>
+        <td>{{ task.name }}</td>
+        <td>{{ task.description }}</td>
+        <td>{{ task.deadline | date }}</td>
+        <td>{{ task.priority }}</td>
+        <td>{{ task.completed ? "Completed" : "Not Completed" }}</td>
+        <td>
+          <button
+            (click)="editTask(task)"
+            [disabled]="task.completed"
+            class="edit-button"
+          >
+            <i class="fas fa-pencil-alt"></i>
+          </button>
+          <button (click)="deleteTask(task._id)" class="delete-button">
+            <i class="fas fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
